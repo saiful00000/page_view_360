@@ -63,7 +63,7 @@ class _ThreeSixtyPageViewState extends State<ThreeSixtyPageView> with TickerProv
                       onHorizontalDragUpdate: (DragUpdateDetails details) {
                         _toLeftDragExtent += details.primaryDelta ?? 0;
 
-                        /// to ensure only to left drag will work
+                        /// if sliding to right
                         if (_toLeftDragExtent >= 0) {
                           setState(() {
                             _toRightAnimationController.value = _toLeftDragExtent / (context.size?.width ?? 1.0);
@@ -71,6 +71,7 @@ class _ThreeSixtyPageViewState extends State<ThreeSixtyPageView> with TickerProv
                           return;
                         }
 
+                        /// if sliding to left
                         /// calculate how much we dragged into the screen
                         setState(() {
                           _toLeftAnimationController.value = _toLeftDragExtent.abs() / (context.size?.width ?? 1.0);
