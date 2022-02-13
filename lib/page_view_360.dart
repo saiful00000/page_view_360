@@ -10,11 +10,13 @@ class ThreeSixtyPageView extends StatefulWidget {
   /// item builder method
   final IndexedWidgetBuilder itemBuilder;
   final int itemCount;
+  final EdgeInsets pageMargin;
 
   const ThreeSixtyPageView({
     Key? key,
     required this.itemBuilder,
     required this.itemCount,
+    this.pageMargin = const EdgeInsets.all(0.0),
   }) : super(key: key);
 
   @override
@@ -53,6 +55,7 @@ class _ThreeSixtyPageViewState extends State<ThreeSixtyPageView> with TickerProv
               _pageController.jumpToPage(index-1);
             }
           },
+          pagemargin: widget.pageMargin,
         );
       },
     );

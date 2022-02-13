@@ -12,6 +12,7 @@ class LeftRightSlidAble extends StatefulWidget {
     required this.isFirstItem,
     required this.jumpToPreviousPage,
     required this.jumpToNextPage,
+    required this.pagemargin,
   }) : super(key: key);
 
   final Widget child;
@@ -21,6 +22,7 @@ class LeftRightSlidAble extends StatefulWidget {
   final bool isFirstItem;
   final Function jumpToNextPage;
   final Function jumpToPreviousPage;
+  final EdgeInsets pagemargin;
 
   @override
   _LeftRightSlidAbleState createState() => _LeftRightSlidAbleState();
@@ -155,7 +157,10 @@ class _LeftRightSlidAbleState extends State<LeftRightSlidAble> with TickerProvid
                   builder: (context, child) {
                     return SlideTransition(
                       position: AlwaysStoppedAnimation(Offset(-_toLeftAnimationController.value, 0.0)),
-                      child: widget.child,
+                      child: Padding(
+                        padding: widget.pagemargin,
+                        child: widget.child,
+                      ),
                     );
                   },
                 ),
