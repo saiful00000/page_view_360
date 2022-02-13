@@ -10,15 +10,11 @@ class ThreeSixtyPageView extends StatefulWidget {
   /// item builder method
   final IndexedWidgetBuilder itemBuilder;
   final int itemCount;
-  final IndexedWidgetBuilder nextItemBuilder;
-  final IndexedWidgetBuilder previousItemBuilder;
 
   const ThreeSixtyPageView({
     Key? key,
     required this.itemBuilder,
     required this.itemCount,
-    required this.previousItemBuilder,
-    required this.nextItemBuilder,
   }) : super(key: key);
 
   @override
@@ -45,8 +41,18 @@ class _ThreeSixtyPageViewState extends State<ThreeSixtyPageView> with TickerProv
           isFirstItem: index == 0,
           isLastItem: index == (widget.itemCount - 1),
           child: widget.itemBuilder(context, index),
-          nextChild: widget.nextItemBuilder(context, index < (widget.itemCount - 1) ? index + 1: index),
-          previousChild: widget.previousItemBuilder(context, index > 0 ? index - 1: index),
+          nextChild: widget.itemBuilder(context, index < (widget.itemCount - 1) ? index + 1: index),
+          previousChild: widget.itemBuilder(context, index > 0 ? index - 1: index),
+          jumpToNextPage: (){
+            if(index < (widget.itemCount-1)){
+              _pageController.jumpToPage(index+1);
+            }
+          },
+          jumpToPreviousPage: (){
+            if(index > 0){
+              _pageController.jumpToPage(index-1);
+            }
+          },
         );
       },
     );

@@ -40,12 +40,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: ThreeSixtyPageView(
         itemCount: colorsList.length,
-        previousItemBuilder: (context, index){
-          return Container(color: colorsList[index],);
-        },
-        nextItemBuilder: (context, index){
-          return Container(color: colorsList[index],);
-        },
         itemBuilder: (context, index){
           return Container(color: colorsList[index],);
         },
