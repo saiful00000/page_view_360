@@ -32,6 +32,12 @@ class _ThreeSixtyPageViewState extends State<ThreeSixtyPageView> with TickerProv
   }
 
   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     /// to right sliding
     return PageView.builder(

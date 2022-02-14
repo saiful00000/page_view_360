@@ -29,8 +29,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  final colorsList = [Colors.blue, Colors.green, Colors.pink, Colors.purple, Colors.blueGrey, Colors.amber, Colors.deepOrange];
+  final colorsList = [
+    Colors.blue,
+    Colors.green,
+    Colors.pink,
+    Colors.purple,
+    Colors.blueGrey,
+    Colors.amber,
+    Colors.deepOrange
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +48,17 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ThreeSixtyPageView(
         itemCount: colorsList.length,
         // pageMargin: const EdgeInsets.all(16),
-        itemBuilder: (context, index){
-          return Container(color: colorsList[index],);
+        itemBuilder: (context, index) {
+          return Container(
+            color: colorsList[index],
+            alignment: Alignment.center,
+            child: Text(
+              '$index',
+              style: const TextStyle(
+                fontSize: 56,
+              ),
+            ),
+          );
         },
       ),
     );
