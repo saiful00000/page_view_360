@@ -1,6 +1,6 @@
 name: page_view_360
 description: A flutter package to utilize PageView.builder(). This package allow to implement a quad directional Pageview. User are allow to scroll/slide pages in 4 direction.
-version: 0.0.1
+version: 0.0.2
 homepage: 'https://github.com/saiful00000'
 
 environment:
