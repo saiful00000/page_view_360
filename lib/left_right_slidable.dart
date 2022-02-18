@@ -154,7 +154,7 @@ class _LeftRightSlidAbleState extends State<LeftRightSlidAble> with TickerProvid
             visible: showPreviousWidget,
             child: AnimatedBuilder(
               animation: _previousAnimationController,
-              builder: (context, child){
+              builder: (context, child) {
                 return SlideTransition(
                   position: AlwaysStoppedAnimation(Offset(_previousAnimationController.value - 1, 0.0)),
                   child: widget.previousChild,

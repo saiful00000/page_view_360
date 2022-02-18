@@ -49,16 +49,16 @@ class _ThreeSixtyPageViewState extends State<ThreeSixtyPageView> with TickerProv
           isFirstItem: index == 0,
           isLastItem: index == (widget.itemCount - 1),
           child: widget.itemBuilder(context, index),
-          nextChild: widget.itemBuilder(context, index < (widget.itemCount - 1) ? index + 1: index),
-          previousChild: widget.itemBuilder(context, index > 0 ? index - 1: index),
-          jumpToNextPage: (){
-            if(index < (widget.itemCount-1)){
-              _pageController.jumpToPage(index+1);
+          nextChild: widget.itemBuilder(context, index < (widget.itemCount - 1) ? index + 1 : index),
+          previousChild: widget.itemBuilder(context, index > 0 ? index - 1 : index),
+          jumpToNextPage: () {
+            if (index < (widget.itemCount - 1)) {
+              _pageController.jumpToPage(index + 1);
             }
           },
-          jumpToPreviousPage: (){
-            if(index > 0){
-              _pageController.jumpToPage(index-1);
+          jumpToPreviousPage: () {
+            if (index > 0) {
+              _pageController.jumpToPage(index - 1);
             }
           },
           pagemargin: widget.pageMargin,
