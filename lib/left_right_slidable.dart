@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:page_view_360/page_view_360.dart';
 
+/// A slide-able widget build using [AnimatedBuilder] and [SlideTransition]
 class LeftRightSlidAble extends StatefulWidget {
   const LeftRightSlidAble({
     Key? key,
@@ -10,23 +12,49 @@ class LeftRightSlidAble extends StatefulWidget {
     required this.isFirstItem,
     required this.jumpToPreviousPage,
     required this.jumpToNextPage,
-    required this.pagemargin,
+    required this.pageMargin,
   }) : super(key: key);
 
+  /// The current page widget that is visible in screen
   final Widget child;
+
+  /// The next widget that will appear after slide to left
+  ///
+  /// represent the next page
   final Widget nextChild;
+
+  /// The previous widget that will appear after slide to right
+  ///
+  /// represent the previous page
   final Widget previousChild;
+
+  /// true if current page is the last page
   final bool isLastItem;
+
+  /// true if current page is the first page
   final bool isFirstItem;
+
+  /// This callback is the trick here, its help to update current page by jumping
+  /// to required page.
+  ///
+  /// its execute after sliding to left animation complete to update the
+  /// [ThreeSixtyPageView] current page
   final Function jumpToNextPage;
+
+  /// This callback is the trick here, its help to update current page by jumping
+  /// to required page.
+  ///
+  /// its execute after sliding to right animation complete to update the
+  /// [ThreeSixtyPageView] current page
   final Function jumpToPreviousPage;
-  final EdgeInsets pagemargin;
+  final EdgeInsets pageMargin;
 
   @override
   _LeftRightSlidAbleState createState() => _LeftRightSlidAbleState();
 }
 
-class _LeftRightSlidAbleState extends State<LeftRightSlidAble> with TickerProviderStateMixin {
+class _LeftRightSlidAbleState extends State<LeftRightSlidAble>
+    with TickerProviderStateMixin {
   /// animation controllers
   late final AnimationController _toLeftAnimationController;
   late final AnimationController _nextAnimationController;
@@ -36,7 +64,12 @@ class _LeftRightSlidAbleState extends State<LeftRightSlidAble> with TickerProvid
   /// indicate drag extent value is screen
   double _toLeftDragExtent = 0.0;
 
+  /// A flag to detect whether next next should visible or not
+  ///
+  /// default is true
   bool showNextWidget = false;
+
+  /// A flag to detect whether next page should be visible or not
   bool showPreviousWidget = false;
 
   @override
@@ -84,8 +117,10 @@ class _LeftRightSlidAbleState extends State<LeftRightSlidAble> with TickerProvid
           setState(() {
             showNextWidget = false;
             showPreviousWidget = true;
-            _toRightAnimationController.value = _toLeftDragExtent / (context.size?.width ?? 1.0);
-            _previousAnimationController.value = _toLeftDragExtent / (context.size?.width ?? 1.0);
+            _toRightAnimationController.value =
+                _toLeftDragExtent / (context.size?.width ?? 1.0);
+            _previousAnimationController.value =
+                _toLeftDragExtent / (context.size?.width ?? 1.0);
           });
           return;
         }
@@ -98,8 +133,10 @@ class _LeftRightSlidAbleState extends State<LeftRightSlidAble> with TickerProvid
         setState(() {
           showPreviousWidget = false;
           showNextWidget = true;
-          _toLeftAnimationController.value = _toLeftDragExtent.abs() / (context.size?.width ?? 1.0);
-          _nextAnimationController.value = _toLeftDragExtent.abs() / (context.size?.width ?? 1.0);
+          _toLeftAnimationController.value =
+              _toLeftDragExtent.abs() / (context.size?.width ?? 1.0);
+          _nextAnimationController.value =
+              _toLeftDragExtent.abs() / (context.size?.width ?? 1.0);
         });
       },
 
@@ -108,7 +145,7 @@ class _LeftRightSlidAbleState extends State<LeftRightSlidAble> with TickerProvid
         /// if slided bellow 10% of screen
         /// then reverse the animation
         // if slided to left
-        print('to left controller value = ${_toLeftAnimationController.value}');
+        //print('to left controller value = ${_toLeftAnimationController.value}');
         if (_toLeftAnimationController.value > 0.2) {
           _toLeftAnimationController.fling();
           await _nextAnimationController.fling();
@@ -120,7 +157,7 @@ class _LeftRightSlidAbleState extends State<LeftRightSlidAble> with TickerProvid
         }
 
         // is slide to right
-        print('to right controller value = ${_toRightAnimationController.value}');
+        //print('to right controller value = ${_toRightAnimationController.value}');
         if (_toRightAnimationController.value > 0.2) {
           _toRightAnimationController.fling();
           await _previousAnimationController.fling();
@@ -142,7 +179,8 @@ class _LeftRightSlidAbleState extends State<LeftRightSlidAble> with TickerProvid
               animation: _nextAnimationController,
               builder: (context, child) {
                 return SlideTransition(
-                  position: AlwaysStoppedAnimation(Offset((-_nextAnimationController.value + 1), 0.0)),
+                  position: AlwaysStoppedAnimation(
+                      Offset((-_nextAnimationController.value + 1), 0.0)),
                   child: widget.nextChild,
                 );
               },
@@ -156,7 +194,8 @@ class _LeftRightSlidAbleState extends State<LeftRightSlidAble> with TickerProvid
               animation: _previousAnimationController,
               builder: (context, child) {
                 return SlideTransition(
-                  position: AlwaysStoppedAnimation(Offset(_previousAnimationController.value - 1, 0.0)),
+                  position: AlwaysStoppedAnimation(
+                      Offset(_previousAnimationController.value - 1, 0.0)),
                   child: widget.previousChild,
                 );
               },
@@ -168,16 +207,18 @@ class _LeftRightSlidAbleState extends State<LeftRightSlidAble> with TickerProvid
             animation: _toRightAnimationController,
             builder: (context, child) {
               return SlideTransition(
-                position: AlwaysStoppedAnimation(Offset(_toRightAnimationController.value, 0.0)),
+                position: AlwaysStoppedAnimation(
+                    Offset(_toRightAnimationController.value, 0.0)),
 
                 /// to left sliding
                 child: AnimatedBuilder(
                   animation: _toLeftAnimationController,
                   builder: (context, child) {
                     return SlideTransition(
-                      position: AlwaysStoppedAnimation(Offset(-_toLeftAnimationController.value, 0.0)),
+                      position: AlwaysStoppedAnimation(
+                          Offset(-_toLeftAnimationController.value, 0.0)),
                       child: Padding(
-                        padding: widget.pagemargin,
+                        padding: widget.pageMargin,
                         child: widget.child,
                       ),
                     );

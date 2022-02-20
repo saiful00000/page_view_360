@@ -39,6 +39,24 @@ class _MyHomePageState extends State<MyHomePage> {
     Colors.deepOrange
   ];
 
+  final PageController _pageController = PageController();
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController.addListener(() {
+      if (_pageController.position.maxScrollExtent == _pageController.offset) {
+        print('max => max');
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ThreeSixtyPageView(
         itemCount: colorsList.length,
         // pageMargin: const EdgeInsets.all(16),
+        pageController: _pageController,
         itemBuilder: (context, index) {
           return Container(
             color: colorsList[index],
@@ -59,6 +78,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           );
+        },
+        onPageChanged: (page) {
+          print('=> page = $page');
         },
       ),
     );
