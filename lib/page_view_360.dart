@@ -11,7 +11,7 @@ class ThreeSixtyPageView extends StatefulWidget {
   /// provide a [PageView.builder] with ability to slide in 4 direction
   /// using the [itemBuilder] Callback
   ///
-  /// The [itemCount], [itemBuilder]must not be null.
+  /// The [itemCount], [itemBuilder] must not be null.
   const ThreeSixtyPageView({
     Key? key,
     this.pageController,
